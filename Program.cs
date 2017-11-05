@@ -12,7 +12,7 @@ namespace ConsoleApp2
         {
             while (true)
             {
-                new FancyRepository().GetCatchErrorGreaterThanZero(Console.ReadLine());
+               new FancyRepository().GetCatchErrorGreaterThanZero(Console.ReadLine());
             }
         }
     }
@@ -25,14 +25,16 @@ namespace ConsoleApp2
             {
                 return GetInternal(value);
             }
-            catch (FancyException fe) when (LogToDatabase(fe.ErrorCode) | fe.ErrorCode > 0)
+            catch (FancyException fe) when (LogToDatabase(fe.ErrorCode) || fe.ErrorCode > 0)
             {
-                throw fe;
+                throw;
             }
         }
 
         private string GetInternal(string value)
         {
+            int randomNumber = new Random().Next();
+
             if (!value.Any())
                 throw new FancyException(0);
 
